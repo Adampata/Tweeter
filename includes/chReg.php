@@ -26,6 +26,11 @@ if (isset($_POST['registerNow'])){
 	$email2 = $_POST['userEmail2'];
 	$emailB = filter_var($email, FILTER_SANITIZE_EMAIL);
 	$allCorrect = true;
+	
+	//sprawdzenie captcha
+		$secretCap = "6LfoKD0UAAAAAITbl4BWSEKMZftEqZrsMfHt0jab";
+		$chCap = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$secretCap.'&response='.$_POST['g-recaptcha-response']);
+		$capResponse = json_decode($chCap);
 
 	$isUserInBase=isUserInBase($user, $conn);
 
@@ -70,5 +75,10 @@ if (isset($_POST['registerNow'])){
 		$emailError = "Podane adresy email muszą być jednakowe!";
 		$allCorrect = false;
 	}	
+
+	if ($capResponse -> success == false) {
+		$capError = "Jesteś BOTEM!!!";
+		$allCorrect = false;
+	}
 }
 ?>
