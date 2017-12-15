@@ -6,8 +6,8 @@ session_start();
 	if ( !isset ($_SESSION['userIsSet']) ) {
 		header ('Location: includes/login.php');
 	} elseif ($_SESSION['userIsSet']==1) {
-		echo '<div>Witaj ' . $_SESSION['user'] . '! Twoje id to:' . $_SESSION['userId'] . '</div>';
-		echo '<div> <a href="includes/logout.php?logout=1">Wyloguj się!</a></div>';
+		echo '<div style="font:21px Tahoma">Witaj ' . $_SESSION['user'] . '!</div>';
+		echo '<div style="font:16px Tahoma"> <a href="includes/logout.php?logout=1">Wyloguj się!</a></div>';
 		$h = $_SESSION['h'];
 	} 
 
