@@ -6,8 +6,8 @@ session_start();
 	if ( !isset ($_SESSION['userIsSet']) ) {
 		header ('Location: includes/login.php');
 	} elseif ($_SESSION['userIsSet']==1) {
-		echo '<div>Witaj ' . $_SESSION['user'] . '! Twoje id to:' . $_SESSION['userId'] . '</div>';
-		echo '<div> <a href="includes/logout.php?logout=1">Wyloguj się!</a></div>';
+		echo '<div style="font:21px Tahoma">Witaj ' . $_SESSION['user'] . '!</div>';
+		echo '<div style="font:16px Tahoma"> <a href="includes/logout.php?logout=1">Wyloguj się!</a></div>';
 		$h = $_SESSION['h'];
 	} 
 
@@ -53,9 +53,10 @@ session_start();
 		{
 			float: left;
 			margin-right:;
-			width: 50%;
-			font:10px Tahoma, cursive;
+			width: 80%;
+			font:13px Tahoma, cursive;
 			margin-left: 20px;
+
 		}
 
 		.comments
@@ -72,62 +73,72 @@ session_start();
 		font-smoothing:subpixel-antialiased;
 		margin-left: 10px;
 		margin-top: 30px;
-		background: #F2F2F2;"
+		background: #F2F2F2;
 		}
+
+		.error
+		{
+		font: font:13px Tahoma, cursive;
+		}
+
+		table 
+		{
+		width: auto; 
+		}
+		
+		td 
+		{
+		
+		padding: 5px;
+		}
+
+		tr
+		{
+
+		}
+		
+		.header 
+		{
+	    font-weight: bold;
+	    background-color: #C0C0C0; 
+		}
+
 	</style>
 </head>
 <body style="background: #EFFBFB;">
 	<div>
 		<div align="center" class="title">
-			Strona główna
+			<?php
+
+				switch($_GET['to'])
+				{
+					case($_GET['to'] == "main"): echo "Strona główna"; break;
+					case($_GET['to'] == "your_mas"): echo "Twoje wpisy"; break;
+					case($_GET['to'] == "settings"): echo "Ustawienia"; break;
+				}
+			?>
 		</div>
 		<div class="leftmenu">
 			<div>
-				Twoje wiadomości
+				<a href="index.php?to=main">Strona główna</a>
 			</div>
 			<div>
-				Ustawienia konta
+				<a href="index.php?to=your_mas">Twoje wiadomości</a>
+			</div>
+			<div>
+				<a href="index.php?to=settings">Ustawienia konta</a>
 			</div>
 		</div>
 		<div class="zawartosc">
-			<div style="margin-top: 10px; margin-left: 10px; font-size: 20px;
-">
-				Co u ciebie słychać? :)
-			</div>
-			<div>
-				<form action="" method="POST">
-					<div>
-						<textarea type="text" name="whatsup" 
-						style=" width: 95%;
-					    direction:ltr;
-					    line-height:1.5;
-					    padding:15px 15px 30px;
-					    border-radius:3px;
-					    border:1px solid #F7E98D;
-					    font:13px Tahoma, cursive;
-					    transition:box-shadow 0.5s ease;
-					    box-shadow:0 4px 6px rgba(0,0,0,0.1);
-					    font-smoothing:subpixel-antialiased;
-					    margin-left: 10px;
-					    margin-top: 10px;">
+			<?php
 
-    				</textarea>
-    			</div>
-    			<div>
-    				<input type="submit" name="gogogo" value="Wyślij wiadomość" style="float: right; margin-right: 20px; margin-top: 10px; margin-bottom: 20px; border-radius:3px; border:1px solid #F7E98E; font-weight: 600;">
-    				<input type="hidden" name="ref" value="<?php $r=random_bytes(5); echo $r; ?>">
-    			</div>
-    			<div style="margin-top: 60px;">
-    				<?php
-    					if (isset($tablica)) {
-    						for ($i=0; $i < count($tablica); $i++) { 
-    							echo '<div class="comments">'.$tablica[$i]['content'].'</div><div>'.$tablica[$i]['adDate'].' '.$tablica[$i]['property'].'</div>';
-    						}
-    					}
-    				?>
-    			</div>
-				</form>
-			</div>
+				switch($_GET['to'])
+				{
+					case($_GET['to'] == "main"): include ('includes/main.php'); break;
+					case($_GET['to'] == "your_mas"): include ('includes/your_mas.php'); break;
+					case($_GET['to'] == "settings"): include ('includes/settings.php'); break;
+				}
+			?>
 		</div>
 	</div>
 

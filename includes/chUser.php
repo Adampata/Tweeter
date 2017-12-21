@@ -4,13 +4,14 @@
 
 $user = $_POST['userName'];
 $password = $_POST['userPassword'];
+$loginError = null;
+$passError = null;
 
-$query = "SELECT * FROM users WHERE userName=:user AND password=:password";
+$query = "SELECT * FROM users WHERE userName=:user";
 //$query = "SELECT * FROM users WHERE userName='Adam' AND password='qwerty'";
 
 $chUser = $conn -> prepare($query);
 $chUser -> bindValue (':user',$user, PDO::PARAM_STR);
-$chUser -> bindValue (':password',$password, PDO::PARAM_STR);
 $chUser -> execute();
 
 $res = $chUser -> fetchAll();
@@ -25,12 +26,18 @@ $res = $chUser -> fetchAll();
 if (count($res)!==1){
 	$loginError = 1;
 } else {
-	$_SESSION['user'] = $user;
-	$_SESSION['userIsSet'] = 1;
-	$_SESSION['userId'] = $res[0]['id'];
-	$_SESSION['h'] = 10;
-	$_SESSION['ref'] = null;
-	header('Location:../index.php');
-}
+	$pass_hashed = $res[0]['password'];
+		if (password_verify($password, $pass_hashed)) {
+			$_SESSION['user'] = $user;
+			$_SESSION['userIsSet'] = 1;
+			$_SESSION['userId'] = $res[0]['id'];
+			$_SESSION['h'] = 10;
+			$_SESSION['ref'] = null;
+			header('Location:../index.php?to=main');
+		} else {
+			$passError = 1;
+			}
+	}
+	
 
 ?>
