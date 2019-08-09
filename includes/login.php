@@ -41,8 +41,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			Zaloguj się!<br>
 <?php
 	if (isset($_POST['login'])) {
-		if ($loginError=1) {
+		if ($loginError==1) {
 			echo '<div class="error">Nazwa użytkownika lub hasło są nieprawidłowe. Spróbuj ponownie!</div>';
+		} elseif ($passError==1) {
+			echo '<div class="error">Podane hasło jest nieprawidłowe. Spróbuj ponownie!</div>';
 		}
 	}
 ?>

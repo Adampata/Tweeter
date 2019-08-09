@@ -1,10 +1,10 @@
 <?php
 	
 $query = "INSERT  INTO `users`(`userName`, `password`, `mail`) VALUES (:user, :password, :mail)";
-
+$password_hash = password_hash($password, PASSWORD_DEFAULT);
 $addNewUser = $conn->prepare($query);
 	$addNewUser->bindValue(':user', $user, PDO::PARAM_STR);
-	$addNewUser->bindValue(':password', $password, PDO::PARAM_STR);
+	$addNewUser->bindValue(':password', $password_hash, PDO::PARAM_STR);
 	$addNewUser->bindValue(':mail', $email, PDO::PARAM_STR);
 $addNewUser->execute();
 
